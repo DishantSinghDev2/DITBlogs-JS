@@ -1,6 +1,6 @@
 {
   "name": "@dishistech/blogs-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Official React components for the blogs.dishis.tech API",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -24,10 +24,11 @@
     "@dishistech/blogs-sdk": "workspace:*"
   },
   "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0",
     "lucide-react": ">=0.300.0 <1.0.0",
-    "react": ">=18.2.0 <19.0.0",
-    "react-dom": ">=18.2.0 <19.0.0",
     "swr": ">=2.2.0 <3.0.0"
+
   },
   "publishConfig": {
     "access": "public"
