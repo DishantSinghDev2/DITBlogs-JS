@@ -1,13 +1,13 @@
 {
   "name": "@dishistech/blogs-react",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Official React components for the blogs.dishis.tech API",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build:js": "tsup src/index.ts --format cjs,esm --external react",
-    "dev": "tsup src/index.ts --format cjs,esm --external react --watch"
+    "build:js": "tsup",
+    "dev": "tsup --watch"
   },
   "keywords": ["react", "components", "ui", "blog", "dishistech"],
   "author": "blogs.dishis.tech",
