@@ -139,7 +139,7 @@ function BlogLayout({ children, apiKey, theme, navLinks, linkComponent }) {
 
 // src/components/PostsListPage.tsx
 var import_react2 = require("react");
-var import_swr2 = __toESM(require("swr"));
+var SWR = __toESM(require("swr"));
 var import_lucide_react2 = require("lucide-react");
 
 // src/components/Pagination.tsx
@@ -261,7 +261,7 @@ function PostCard({ post }) {
 function PostsListPage({ category, tag }) {
   const { client } = useDITBlogsContext();
   const [currentPage, setCurrentPage] = (0, import_react2.useState)(1);
-  const { data, error, isLoading } = (0, import_swr2.default)(
+  const { data, error, isLoading } = SWR.default(
     ["posts", category, tag, currentPage],
     () => client.getPosts({ category, tag, page: currentPage })
   );
@@ -288,16 +288,16 @@ function PostsListPage({ category, tag }) {
 }
 
 // src/components/PostDetailsPage.tsx
-var import_swr4 = __toESM(require("swr"));
+var useSWR2 = __toESM(require("swr"));
 
 // src/components/CommentsSection.tsx
 var import_react3 = require("react");
-var import_swr3 = __toESM(require("swr"));
+var useSWR = __toESM(require("swr"));
 var import_lucide_react3 = require("lucide-react");
 var import_jsx_runtime6 = require("react/jsx-runtime");
 function CommentForm({ postSlug, userToken, parentId, onCommentPosted }) {
   const { client } = useDITBlogsContext();
-  const { mutate } = (0, import_swr3.useSWRConfig)();
+  const { mutate } = useSWR.useSWRConfig();
   const [content, setContent] = (0, import_react3.useState)("");
   const [error, setError] = (0, import_react3.useState)(null);
   const [isSubmitting, setIsSubmitting] = (0, import_react3.useState)(false);
@@ -357,7 +357,7 @@ function CommentItem({ comment, postSlug, userToken }) {
 }
 function CommentsSection({ postSlug, userToken }) {
   const { client } = useDITBlogsContext();
-  const { data: comments, error, isLoading } = (0, import_swr3.default)(["comments", postSlug], () => client.getComments(postSlug));
+  const { data: comments, error, isLoading } = useSWR.default(["comments", postSlug], () => client.getComments(postSlug));
   if (isLoading) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(CommentsSectionSkeleton, {});
   if (error) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-red-500 text-center py-4", children: "Could not load comments." });
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
@@ -375,7 +375,7 @@ function CommentsSection({ postSlug, userToken }) {
 var import_jsx_runtime7 = require("react/jsx-runtime");
 function PostDetailsPage({ slug, userToken }) {
   const { client } = useDITBlogsContext();
-  const { data: post, error, isLoading } = (0, import_swr4.default)(["post", slug], () => client.getPost(slug));
+  const { data: post, error, isLoading } = useSWR2.default(["post", slug], () => client.getPost(slug));
   if (isLoading) return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PostDetailsSkeleton, {});
   if (error) return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center text-red-500 py-10", children: "Error loading post. Please try again later." });
   if (!post) return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center text-muted-foreground py-10", children: "404 | Post not found." });
@@ -411,7 +411,7 @@ function PostDetailsPage({ slug, userToken }) {
 
 // src/components/CategoryPage.tsx
 var import_react4 = require("react");
-var import_swr5 = __toESM(require("swr"));
+var useSWR3 = __toESM(require("swr"));
 
 // src/components/PostCard.tsx
 var import_lucide_react4 = require("lucide-react");
@@ -441,7 +441,7 @@ var import_jsx_runtime9 = require("react/jsx-runtime");
 function CategoryPage({ slug }) {
   const { client } = useDITBlogsContext();
   const [currentPage, setCurrentPage] = (0, import_react4.useState)(1);
-  const { data, error, isLoading } = (0, import_swr5.default)(["category", slug, currentPage], () => client.getCategory(slug, { page: currentPage }));
+  const { data, error, isLoading } = useSWR3.default(["category", slug, currentPage], () => client.getCategory(slug, { page: currentPage }));
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo(0, 0);
@@ -474,11 +474,11 @@ function CategoryPage({ slug }) {
 }
 
 // src/components/TagsListPage.tsx
-var import_swr6 = __toESM(require("swr"));
+var useSWR4 = __toESM(require("swr"));
 var import_jsx_runtime10 = require("react/jsx-runtime");
 function TagsListPage() {
   const { client } = useDITBlogsContext();
-  const { data: tags, error, isLoading } = (0, import_swr6.default)("tags", () => client.getTags());
+  const { data: tags, error, isLoading } = useSWR4.default("tags", () => client.getTags());
   if (error) return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "text-center text-red-500", children: "Failed to load tags." });
   if (isLoading) {
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "text-center text-muted-foreground", children: "Loading tags..." });
@@ -499,12 +499,12 @@ function TagsListPage() {
 }
 
 // src/components/CategoriesListPage.tsx
-var import_swr7 = __toESM(require("swr"));
+var useSWR5 = __toESM(require("swr"));
 var import_lucide_react5 = require("lucide-react");
 var import_jsx_runtime11 = require("react/jsx-runtime");
 function CategoriesListPage() {
   const { client } = useDITBlogsContext();
-  const { data: categories, error, isLoading } = (0, import_swr7.default)("categories", () => client.getCategories());
+  const { data: categories, error, isLoading } = useSWR5.default("categories", () => client.getCategories());
   if (error) return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "text-center text-red-500", children: "Failed to load categories." });
   if (isLoading) {
     return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4", children: [...Array(8)].map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "p-6 bg-muted rounded-lg animate-pulse h-24" }, i)) });

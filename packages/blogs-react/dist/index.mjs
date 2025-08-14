@@ -88,7 +88,7 @@ function BlogLayout({ children, apiKey, theme, navLinks, linkComponent }) {
 
 // src/components/PostsListPage.tsx
 import { useState, useEffect as useEffect2 } from "react";
-import useSWR from "swr";
+import * as SWR from "swr";
 import { ArrowRight, Search as SearchIcon } from "lucide-react";
 
 // src/components/Pagination.tsx
@@ -210,7 +210,7 @@ function PostCard({ post }) {
 function PostsListPage({ category, tag }) {
   const { client } = useDITBlogsContext();
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = SWR.default(
     ["posts", category, tag, currentPage],
     () => client.getPosts({ category, tag, page: currentPage })
   );
@@ -237,16 +237,16 @@ function PostsListPage({ category, tag }) {
 }
 
 // src/components/PostDetailsPage.tsx
-import useSWR3 from "swr";
+import * as useSWR2 from "swr";
 
 // src/components/CommentsSection.tsx
 import { useState as useState2 } from "react";
-import useSWR2, { useSWRConfig } from "swr";
+import * as useSWR from "swr";
 import { CornerDownRight, Send } from "lucide-react";
 import { Fragment, jsx as jsx6, jsxs as jsxs5 } from "react/jsx-runtime";
 function CommentForm({ postSlug, userToken, parentId, onCommentPosted }) {
   const { client } = useDITBlogsContext();
-  const { mutate } = useSWRConfig();
+  const { mutate } = useSWR.useSWRConfig();
   const [content, setContent] = useState2("");
   const [error, setError] = useState2(null);
   const [isSubmitting, setIsSubmitting] = useState2(false);
@@ -306,7 +306,7 @@ function CommentItem({ comment, postSlug, userToken }) {
 }
 function CommentsSection({ postSlug, userToken }) {
   const { client } = useDITBlogsContext();
-  const { data: comments, error, isLoading } = useSWR2(["comments", postSlug], () => client.getComments(postSlug));
+  const { data: comments, error, isLoading } = useSWR.default(["comments", postSlug], () => client.getComments(postSlug));
   if (isLoading) return /* @__PURE__ */ jsx6(CommentsSectionSkeleton, {});
   if (error) return /* @__PURE__ */ jsx6("div", { className: "text-red-500 text-center py-4", children: "Could not load comments." });
   return /* @__PURE__ */ jsxs5("div", { children: [
@@ -324,7 +324,7 @@ function CommentsSection({ postSlug, userToken }) {
 import { jsx as jsx7, jsxs as jsxs6 } from "react/jsx-runtime";
 function PostDetailsPage({ slug, userToken }) {
   const { client } = useDITBlogsContext();
-  const { data: post, error, isLoading } = useSWR3(["post", slug], () => client.getPost(slug));
+  const { data: post, error, isLoading } = useSWR2.default(["post", slug], () => client.getPost(slug));
   if (isLoading) return /* @__PURE__ */ jsx7(PostDetailsSkeleton, {});
   if (error) return /* @__PURE__ */ jsx7("div", { className: "text-center text-red-500 py-10", children: "Error loading post. Please try again later." });
   if (!post) return /* @__PURE__ */ jsx7("div", { className: "text-center text-muted-foreground py-10", children: "404 | Post not found." });
@@ -360,7 +360,7 @@ function PostDetailsPage({ slug, userToken }) {
 
 // src/components/CategoryPage.tsx
 import { useState as useState3 } from "react";
-import useSWR4 from "swr";
+import * as useSWR3 from "swr";
 
 // src/components/PostCard.tsx
 import { ArrowRight as ArrowRight2 } from "lucide-react";
@@ -390,7 +390,7 @@ import { jsx as jsx9, jsxs as jsxs8 } from "react/jsx-runtime";
 function CategoryPage({ slug }) {
   const { client } = useDITBlogsContext();
   const [currentPage, setCurrentPage] = useState3(1);
-  const { data, error, isLoading } = useSWR4(["category", slug, currentPage], () => client.getCategory(slug, { page: currentPage }));
+  const { data, error, isLoading } = useSWR3.default(["category", slug, currentPage], () => client.getCategory(slug, { page: currentPage }));
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo(0, 0);
@@ -423,11 +423,11 @@ function CategoryPage({ slug }) {
 }
 
 // src/components/TagsListPage.tsx
-import useSWR5 from "swr";
+import * as useSWR4 from "swr";
 import { jsx as jsx10, jsxs as jsxs9 } from "react/jsx-runtime";
 function TagsListPage() {
   const { client } = useDITBlogsContext();
-  const { data: tags, error, isLoading } = useSWR5("tags", () => client.getTags());
+  const { data: tags, error, isLoading } = useSWR4.default("tags", () => client.getTags());
   if (error) return /* @__PURE__ */ jsx10("div", { className: "text-center text-red-500", children: "Failed to load tags." });
   if (isLoading) {
     return /* @__PURE__ */ jsx10("div", { className: "text-center text-muted-foreground", children: "Loading tags..." });
@@ -448,12 +448,12 @@ function TagsListPage() {
 }
 
 // src/components/CategoriesListPage.tsx
-import useSWR6 from "swr";
+import * as useSWR5 from "swr";
 import { Tag as CategoryIcon } from "lucide-react";
 import { jsx as jsx11, jsxs as jsxs10 } from "react/jsx-runtime";
 function CategoriesListPage() {
   const { client } = useDITBlogsContext();
-  const { data: categories, error, isLoading } = useSWR6("categories", () => client.getCategories());
+  const { data: categories, error, isLoading } = useSWR5.default("categories", () => client.getCategories());
   if (error) return /* @__PURE__ */ jsx11("div", { className: "text-center text-red-500", children: "Failed to load categories." });
   if (isLoading) {
     return /* @__PURE__ */ jsx11("div", { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4", children: [...Array(8)].map((_, i) => /* @__PURE__ */ jsx11("div", { className: "p-6 bg-muted rounded-lg animate-pulse h-24" }, i)) });
