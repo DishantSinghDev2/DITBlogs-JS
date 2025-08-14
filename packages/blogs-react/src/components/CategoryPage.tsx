@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import useSWR from 'swr';
+import * as useSWR from 'swr';
 import { useDITBlogsContext } from '../provider';
 import { PostsListPage } from './PostsListPage';
 import { PostCardSkeleton } from './skeletons';
@@ -15,7 +15,7 @@ export function CategoryPage({ slug }: { slug: string }) {
     const [currentPage, setCurrentPage] = useState(1);
     
     // This SWR hook now also depends on currentPage
-    const { data, error, isLoading } = useSWR(['category', slug, currentPage], () => client.getCategory(slug, { page: currentPage }));
+    const { data, error, isLoading } = useSWR.default(['category', slug, currentPage], () => client.getCategory(slug, { page: currentPage }));
     
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);

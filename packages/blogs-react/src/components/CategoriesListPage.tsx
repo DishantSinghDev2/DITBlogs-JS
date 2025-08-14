@@ -4,14 +4,14 @@
 "use client";
 
 import React from 'react';
-import useSWR from 'swr';
+import * as useSWR from 'swr';
 import { useDITBlogsContext } from '../provider';
 import { Tag as CategoryIcon } from 'lucide-react'; // Using Tag icon for visual consistency
 import { Category } from '@dishistech/blogs-sdk';
 
 export function CategoriesListPage() {
   const {client} = useDITBlogsContext();
-  const { data: categories, error, isLoading } = useSWR('categories', () => client.getCategories());
+  const { data: categories, error, isLoading } = useSWR.default('categories', () => client.getCategories());
 
   if (error) return <div className="text-center text-red-500">Failed to load categories.</div>;
   

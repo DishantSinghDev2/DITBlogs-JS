@@ -2,7 +2,7 @@
 "use client";
 
 import React from 'react';
-import useSWR from 'swr';
+import * as useSWR from 'swr';
 import { useDITBlogsContext } from '../provider'; // Use renamed hook
 import { PostDetailsSkeleton } from './skeletons';
 import { CommentsSection } from './CommentsSection'; // We will create this next
@@ -19,7 +19,7 @@ interface PostDetailsPageProps {
 
 export function PostDetailsPage({ slug, userToken }: PostDetailsPageProps) {
   const {client} = useDITBlogsContext();
-  const { data: post, error, isLoading } = useSWR(['post', slug], () => client.getPost(slug));
+  const { data: post, error, isLoading } = useSWR.default(['post', slug], () => client.getPost(slug));
 
   if (isLoading) return <PostDetailsSkeleton />;
   if (error) return <div className="text-center text-red-500 py-10">Error loading post. Please try again later.</div>;

@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import useSWR from "swr";
+import * as SWR from 'swr';
 import { useDITBlogsContext } from "../provider"; // Use the renamed hookimport { PostCardSkeleton } from "./skeletons"; // Skeletons are crucial!
 import { Post } from "@dishistech/blogs-sdk";
 import { ArrowRight, Search as SearchIcon, X } from "lucide-react";
@@ -60,7 +60,7 @@ export function PostsListPage({ category, tag }: { category?: string; tag?: stri
   const {client} = useDITBlogsContext();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = SWR.default(
     ["posts", category, tag, currentPage],
     () => client.getPosts({ category, tag, page: currentPage })
   );

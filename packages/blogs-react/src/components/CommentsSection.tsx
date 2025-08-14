@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
+import * as useSWR from 'swr';
 import { useDITBlogsContext } from '../provider'; // Use renamed hook
 import { Comment } from '@dishistech/blogs-sdk';
 import { CommentsSectionSkeleton } from './skeletons';
@@ -11,7 +11,7 @@ import { CornerDownRight, Send } from 'lucide-react';
 // --- Reusable Comment Form ---
 function CommentForm({ postSlug, userToken, parentId, onCommentPosted }: { postSlug: string; userToken?: string; parentId?: string; onCommentPosted: () => void }) {
     const {client} = useDITBlogsContext();
-    const { mutate } = useSWRConfig();
+    const { mutate } = useSWR.useSWRConfig();
     const [content, setContent] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,7 +86,7 @@ function CommentItem({ comment, postSlug, userToken }: { comment: Comment; postS
 // --- The Main Exported Component ---
 export function CommentsSection({ postSlug, userToken }: { postSlug: string; userToken?: string }) {
   const {client} = useDITBlogsContext();
-  const { data: comments, error, isLoading } = useSWR(['comments', postSlug], () => client.getComments(postSlug));
+  const { data: comments, error, isLoading } = useSWR.default(['comments', postSlug], () => client.getComments(postSlug));
 
   if (isLoading) return <CommentsSectionSkeleton />;
   if (error) return <div className="text-red-500 text-center py-4">Could not load comments.</div>;
